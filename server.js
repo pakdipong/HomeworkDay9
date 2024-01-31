@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const footballersRouter = require('./routes/footballers');
@@ -8,6 +9,8 @@ dotenv.config();
 
 const app = express();
 const port = 3000;
+
+app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/api/footballers', footballersRouter);

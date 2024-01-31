@@ -32,7 +32,7 @@ exports.getFootballerById = async (req, res) => {
             res.status(500).json({ message: 'Server Error', error: err });
         } else {
             if (result.length === 0) {
-                res.status(404).json({ message: 'Not Found', result });
+                res.status(404).json({ message: 'Not Found'});
             } else {
                 res.status(200).json(result);
             }
@@ -131,7 +131,7 @@ exports.insertFootballer = async (req, res) => {
  *           schema:
  *             type: object
  *             required:
- *              - id
+ *               -id
  *             properties:
  *                name:
  *                  type: string
