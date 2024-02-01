@@ -1,8 +1,6 @@
 const db = require('../db');
 const express = require('express');
 
-const app = express();
-
 /**
  * @swagger
  * '/api/footballers/{id}':
@@ -29,12 +27,12 @@ exports.getFootballerById = async (req, res) => {
     const sql = 'SELECT * FROM footballers WHERE id = ?';
     db.query(sql, [id], (err, result) => {
         if (err) {
-            res.status(500).json({ message: 'Server Error', error: err });
+           res.status(500).send('Server Error');
         } else {
             if (result.length === 0) {
-                res.status(404).json({ message: 'Not Found'});
+                res.status(404).send('Not Found');
             } else {
-                res.status(200).json(result);
+                res.send(result);
             }
         }
     });
@@ -56,9 +54,9 @@ exports.getAllFootballers = async (req, res) => {
     const sql = 'SELECT * FROM footballers';
     db.query(sql, (err, result) => {
         if (err) {
-            res.status(500).json({ message: 'Server Error', error: err });
+            res.status(500).send('Server Error');
         } else {
-            res.status(200).json(result);
+            res.send(result);
         }
     });
 };
@@ -104,9 +102,9 @@ exports.insertFootballer = async (req, res) => {
     const sql = 'INSERT INTO footballers (name, position, club, country) VALUES (?, ?, ?, ?)';
     db.query(sql, [footballer.name, footballer.position, footballer.club, footballer.country], (err, result) => {
         if (err) {
-            res.status(500).json({ message: 'Server Error', error: err });
+            res.status(500).send('Server Error');
         } else {
-            res.status(201).json({ message: 'Created successfully' });
+            res.send('Created successfully');
         }
     });
 };
@@ -162,13 +160,13 @@ exports.updateFootballer = async (req, res) => {
     const sql2 = 'UPDATE footballers SET name = ?, position = ?, club = ?, country = ? WHERE id = ?';
     db.query(sql1, [id], (err, result) => {
         if (result.length === 0) {
-            res.status(404).json({ message: 'Not Found' });
+            res.status(404).send('Not Found');
         } else {
             db.query(sql2, [footballer.name, footballer.position, footballer.club, footballer.country, id], (err, result) => {
                 if (err) {
-                    res.status(500).json({ message: 'Server Error', error: err });
+                    res.status(500).send('Server Error');
                 } else {
-                    res.status(200).json({ message: 'Updated successfully.' });
+                    res.send('Updated successfully');
                 }
             });
         }
@@ -202,13 +200,13 @@ exports.deleteFootballer = async (req, res) => {
     const sql2 = 'DELETE FROM footballers WHERE id = ?';
     db.query(sql1, [id], (err, result) => {
         if (result.length === 0) {
-            res.status(404).json({ message: 'Not Found' });
+            res.status(404).send('Not Found');
         } else {
             db.query(sql2, [id], (err, result) => {
                 if (err) {
-                    res.status(500).json({ message: 'Server Error', error: err });
+                    res.status(500).send('Server Error');
                 } else {
-                    res.status(200).json({ message: 'Deleted successfully' });
+                    res.send('Deleted successfully');
                 }
             });
         }
